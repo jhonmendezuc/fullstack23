@@ -4,13 +4,15 @@ let todolist = document.getElementById("todo-list");
 
 let agregarTareaBtn = document.getElementById("add-btn");
 let tareaTxt = document.getElementById("todo-input");
+let eliminarTareaBtn = document.getElementById("eliminarTarea");
+const inputTxt = document.getElementById("todo-input");
 
 /*
 let titulo = document.getElementsByTagName("h1")[0];
 
 titulo.addEventListener("click", () => {
   console.log("click aqui");
-}) */ console.log(tareaTxt);
+}) */
 tareas.push({
   nombre: "Hacer aseo",
   estado: false,
@@ -30,8 +32,23 @@ agregarTareaBtn.addEventListener("click", () => {
   renderizarTareas();
 });
 
+inputTxt.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    tareas.push({
+      nombre: event.target.value,
+      estado: false,
+    });
+    event.target.value = "";
+    renderizarTareas();
+  }
+});
+
 function agregarTarea(tarea) {
   tareas.push(tarea);
+}
+
+function eliminarTarea() {
+  tareas.pop();
 }
 
 function renderizarTareas() {
@@ -44,11 +61,10 @@ function renderizarTareas() {
          <input type="checkbox" ${tarea.estado ? "checked" : ""} />
          <span>${tarea.nombre}</span>
        </div>
-      <button>✖</button>
+      <button id="eliminarTarea">✖</button>
     </li>
     `;
   });
-  console.log(tareas);
 }
 
 renderizarTareas();
