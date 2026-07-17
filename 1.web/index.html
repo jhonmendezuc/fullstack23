@@ -133,18 +133,15 @@
     <div class="container">
       <h1>TODO</h1>
       <div class="input-section">
-        <input type="text" id="todo-input" placeholder="Create a new todo..." />
+        <input
+          type="text"
+          value=""
+          id="todo-input"
+          placeholder="Create a new todo..."
+        />
         <button id="add-btn">+</button>
       </div>
-      <ul id="todo-list">
-        <li>
-          <div class="todo-item">
-            <input type="checkbox" />
-            <span>tarea 1</span>
-          </div>
-          <button>✖</button>
-        </li>
-      </ul>
+      <ul id="todo-list"></ul>
       <div class="footer">
         <span id="items-left">0 items left</span>
         <div class="filters">
@@ -155,5 +152,6 @@
         <button id="clear-completed">Clear Completed</button>
       </div>
     </div>
+    <script src="./script.js"></script>
   </body>
 </html>
