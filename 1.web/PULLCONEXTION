@@ -1,0 +1,7 @@
+postgresql://neondb_owner:npg_0hs8idnojKHy@ep-round-pond-acrfykjz-pooler.sa-east-1.aws.neon.tech/neondb?channel_binding=require&sslmode=require
+
+
+host ep-round-pond-acrfykjz-pooler.sa-east-1.aws.neon.tech
+bd   neondb
+usu  neondb_owner
+pass npg_0hs8idnojKHy

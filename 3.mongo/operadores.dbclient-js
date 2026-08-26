@@ -1,0 +1,119 @@
+//operadores en mongo db
+//operadores de relacionales
+// $eq: igual a
+// $ne: diferente a
+// $gt: mayor que
+// $gte: mayor o igual que
+// $lt: menor que
+// $lte: menor o igual que
+
+//operadores boleanos
+// $and: y
+// $or: o
+// $not: negación
+
+//operadores aritméticos
+// $inc: incremento
+// $add: suma
+// $subtract: resta
+// $multiply: multiplicación
+// $divide: división
+// $mod: módulo
+
+//buscar todos los documentos de la colección users
+db.users.find();
+//buscar el primer documento de la colección users
+db.users.findOne();
+//busqueda literal
+db.users.findOne({ name: "Juan" });
+db.users.findOne({ Name: "Ned Stark" });
+db.users.findOne({ Name: "Ned Stark", email: "sean_bean@gameofthron.es" });
+db.users.findOne({ _id: ObjectId("59b99db4cfa9a34dcd7885b6") });
+//busqueda con proyecciones
+db.users.findOne({ Name: "Ned Stark" }, { email: 1, _id: 0 });
+db.users.findOne({ Name: "Ned Stark" }).email;
+
+db.movies.findOne({}, { _id: 0, title: 1, languages: 1 });
+
+//peliculas con ranking mayor a 8
+db.movies.find({
+  "imdb.rating": { $gt: 8 },
+});
+db.movies.find({
+  "imdb.rating": { $eq: 8 },
+});
+db.movies.find(
+  {
+    "imdb.rating": { $lt: 8 },
+  },
+  {
+    title: 1,
+    "imdb.rating": 1,
+    _id: 0,
+  },
+);
+
+//buscar pelidulas de drama o terror
+db.movies.find(
+  {
+    genres: { $in: ["Drama", "Horror"] },
+  },
+  {
+    title: 1,
+    genres: 1,
+    _id: 0,
+  },
+);
+db.movies.find(
+  {
+    genres: { $eq: "Drama" },
+  },
+  {
+    title: 1,
+    genres: 1,
+    _id: 0,
+  },
+);
+
+//peliculas de comedia y valoración mayor a 8
+db.movies.find(
+  {
+    $or: [{ genres: { $ne: "Comedy" } }, { "imdb.rating": { $lt: 8 } }],
+  },
+  {
+    title: 1,
+    genres: 1,
+    "imdb.rating": 1,
+    _id: 0,
+  },
+);
+
+//peliculas que no tengan valoración mayor a 8
+db.movies.find(
+  {
+    "imdb.rating": { $not: { $gt: 8 } },
+  },
+  {
+    title: 1,
+    genres: 1,
+    "imdb.rating": 1,
+    _id: 0,
+  },
+);
+
+//proyección con operador suma, sumar un punto a la valoración de las películas
+db.movies.find(
+  {},
+  {
+    _id: 0,
+    title: 1,
+    "imdb.rating": 1,
+    saludo: "hola, ejemplo de proyección con operador suma",
+    ratingMasUno: { $add: ["$imdb.rating", 1] },
+    ratingMenosUno: { $subtract: ["$imdb.rating", 1] },
+    ratingPorDos: { $multiply: ["$imdb.rating", 2] },
+  },
+);
+
+//inserción de un documento en la colección users
+db.users.insertOne({ name: "Juan" });
