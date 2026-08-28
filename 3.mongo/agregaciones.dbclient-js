@@ -1,0 +1,113 @@
+//FRAMEWORK - AGREGATIONS
+//PIPELINE: COJUNTO DE ETAPAS DE CONSULTA QUE SE EJECUTAN EN ORDEN
+
+db.movies.find({
+  year: { $gte: 1990 },
+});
+// consultar peliculas a partir del año 1990, ordenadas de manera descendente por año, mostrando solo el título, año y géneros, limitando la salida a 5 resultados.
+db.movies.aggregate([
+  {
+    $match: { year: { $gte: 1990 } },
+  },
+  {
+    $sort: { year: -1 },
+  },
+  {
+    $project: {
+      _id: 0,
+      title: 1,
+      year: 1,
+      genres: 1,
+      saludo: "Hola",
+    },
+  },
+  {
+    $limit: 5,
+  },
+]);
+
+//consultar cantidad de peliculas por a;o
+db.movies.aggregate([
+  {
+    $group: {
+      _id: "$year",
+      cantidadPeliculas: { $sum: 1 },
+    },
+  },
+  {
+    $sort: { cantidadPeliculas: -1 },
+  },
+  {
+    $limit: 1,
+  },
+]);
+
+db.movies.countDocuments({
+  year: { $gte: 2015 },
+});
+
+//tiempo promedio de duración de las películas
+db.movies.aggregate([
+  {
+    $group: {
+      _id: null,
+      promedioTiempoMinutos: { $avg: "$runtime" },
+    },
+  },
+]);
+
+db.movies.aggregate([
+  {
+    $group: {
+      _id: null,
+      peliculaMasCorta: { $min: "$runtime" },
+      peliculaMasLarga: { $max: "$runtime" },
+    },
+  },
+]);
+
+db.movies.aggregate([
+  {
+    $unwind: "$genres",
+  },
+  {
+    $limit: 5,
+  },
+  {
+    $project: {
+      title: 1,
+      genres: 1,
+    },
+  },
+]);
+
+//funcion de lookup - equivalente a join en sql
+/**
+ * from: The target collection.
+ * localField: The local join field.
+ * foreignField: The target join field.
+ * as: The name for the results.
+ * pipeline: Optional pipeline to run on the foreign collection.
+ * let: Optional variables to use in the pipeline field stages.
+ */
+
+db.movies.aggregate([
+  {
+    $lookup: {
+      from: "comments",
+      localField: "_id",
+      foreignField: "movie_id",
+      as: "ComentariosPeliculas",
+    },
+  },
+  {
+    $unwind: "$ComentariosPeliculas",
+  },
+  {
+    $project: {
+      _id: 0,
+      title: 1,
+      ComentariosPeliculas: 1,
+    },
+  },
+]);
