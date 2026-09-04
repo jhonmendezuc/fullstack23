@@ -1,0 +1,31 @@
+{
+  "name": "modulosterceros",
+  "version": "1.0.0",
+  "description": "ejemplos de modulos de terceros",
+  "keywords": [
+    "nodejs",
+    "js",
+    "fullstack"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github.com/jhonmendezuc/fullstack23.git"
+  },
+  "license": "MIT",
+  "author": "jhon mendez",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongodb": "^7.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
