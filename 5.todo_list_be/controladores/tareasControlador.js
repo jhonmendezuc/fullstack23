@@ -1,26 +1,25 @@
 import tareasServicio from "../servicios/tareasServicio.js";
 
-const obtenerTareas = (req, res) => {
-  const datos = tareasServicio.obtenerTareas();
+const obtenerTareas = async (req, res) => {
+  const datos = await tareasServicio.obtenerTareas();
   res.status(200).json(datos);
 };
 
-const crearTarea = (req, res) => {
-  const datos = tareasServicio.crearTarea(req.body);
+const crearTarea = async (req, res) => {
+  const datos = await tareasServicio.crearTarea(req.body);
   res.status(201).json(datos);
 };
 
-const actualizarTarea = (req, res) => {
+const actualizarTarea = async (req, res) => {
   const body = req.body;
   const id = req.params.id;
-  const datos = tareasServicio.actualizarTarea(body, id);
+  const datos = await tareasServicio.actualizarTarea(body, id);
   res.status(200).json(datos);
 };
 
-const eliminarTarea = (req, res) => {
+const eliminarTarea = async (req, res) => {
   const id = req.params.id;
-  console.log("id", id);
-  const datos = tareasServicio.eliminarTarea(id);
+  const datos = await tareasServicio.eliminarTarea(id);
   res.status(200).json(datos);
 };
 

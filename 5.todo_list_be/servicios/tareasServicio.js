@@ -1,33 +1,45 @@
-const tareas = [
-  {
-    id: 1,
-    title: "Tarea 1",
-    description: "Descripción de la tarea 1",
-    estado: false,
-  },
-  {
-    id: 2,
-    title: "hacer aseo",
-    description: "Descripción de la tarea 2",
-    estado: true,
-  },
-];
+import { PrismaClient } from "@prisma/client";
+
+const clientePrisma = new PrismaClient();
 //funcion que se llama desde el controla para obtener las tareas de la bd
-const obtenerTareas = () => {
+const obtenerTareas = async () => {
   //llamado a la bd
-  return tareas; //retorno de los datos de la bd
+  const respuesta = await clientePrisma.tarea.findMany();
+  return respuesta; //retorno de los datos de la bd
 };
 
-const crearTarea = () => {
-  return "tarea creada";
+const crearTarea = async (body) => {
+  const respuesta = await clientePrisma.tarea.create({
+    data: {
+      nombre: body.nombre,
+      descripcion: body.descripcion,
+      usuarioId: body.usuarioId,
+    },
+  });
+  return respuesta;
 };
 
-const actualizarTarea = () => {
-  return "tarea actualizada";
+const actualizarTarea = async (body, id) => {
+  const respuesta = await clientePrisma.tarea.update({
+    where: {
+      id: id,
+    },
+    data: {
+      nombre: body.nombre,
+      descripcion: body.descripcion,
+      usuarioId: body.usuarioId,
+    },
+  });
+  return respuesta;
 };
 
-const eliminarTarea = () => {
-  return "tarea eliminada";
+const eliminarTarea = async (id) => {
+  const respuesta = await clientePrisma.tarea.delete({
+    where: {
+      id: id,
+    },
+  });
+  return respuesta;
 };
 
 export default {
