@@ -1,9 +1,18 @@
 import express from "express";
 import tareasRutas from "./rutas/tareasRutas.js";
 import usuariosRutas from "./rutas/usuariosRutas.js";
+import cors from "cors";
 const app = express();
 
 //middleware para serializar el body de las solicitudes
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  }),
+);
 app.use(express.json());
 app.use("/tareas", tareasRutas);
 app.use("/usuarios", usuariosRutas);

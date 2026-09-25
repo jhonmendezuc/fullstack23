@@ -6,6 +6,9 @@ const obtenerTareas = async (req, res) => {
 };
 
 const crearTarea = async (req, res) => {
+  const idUsuario = req.datos.id;
+  req.body.usuarioId = idUsuario;
+  console.log(req.body);
   const datos = await tareasServicio.crearTarea(req.body);
   res.status(201).json(datos);
 };

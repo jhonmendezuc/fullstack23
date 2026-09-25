@@ -28,10 +28,16 @@ const inicioUsuario = async (req, res) => {
   res.status(200).json(datos);
 };
 
+const recordarContrasena = async (req, res) => {
+  const datos = await usuariosServicio.recordarContrasena(req.body);
+  res.status(200).json(datos);
+};
+
 export default {
   obtenerUsuarios,
   crearUsuario,
   actualizarUsuario,
   eliminarUsuario,
   inicioUsuario,
+  recordarContrasena,
 };

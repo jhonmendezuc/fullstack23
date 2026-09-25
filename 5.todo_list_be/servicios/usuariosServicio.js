@@ -80,10 +80,28 @@ async function compararContra(contraBD, contraBody) {
   return await bcrypt.compare(contraBody, contraBD);
 }
 
+const recordarContrasena = async (body) => {
+  let { correo } = body;
+  let respuesta = {};
+  let usuario = await clientePrisma.usuario.findUnique({
+    where: {
+      correo: correo,
+    },
+  });
+
+  if (usuario) {
+    respuesta = { respuesta: usuario.contra };
+  } else {
+    respuesta = { respuesta: "usuario no existe" };
+  }
+
+  return respuesta; //retorno de los datos de la bd
+};
 export default {
   obtenerUsuarios,
   crearUsuario,
   actualizarUsuario,
   eliminarUsuario,
   inicioUsuario,
+  recordarContrasena,
 };

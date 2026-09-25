@@ -1,11 +1,17 @@
 import { Router } from "express";
 import usuariosControlador from "../controladores/usuariosControlador.js";
+import verificacion from "../midleware/verificacion.js";
 const ruta = Router();
 ruta
-  .get("/", usuariosControlador.obtenerUsuarios)
+  .get("/", verificacion.verificacion, usuariosControlador.obtenerUsuarios)
   .post("/", usuariosControlador.crearUsuario)
   .post("/inicio", usuariosControlador.inicioUsuario)
-  .put("/:id", usuariosControlador.actualizarUsuario)
-  .delete("/:id", usuariosControlador.eliminarUsuario);
+  .post("/recordarcontra", usuariosControlador.recordarContrasena)
+  .put("/:id", verificacion.verificacion, usuariosControlador.actualizarUsuario)
+  .delete(
+    "/:id",
+    verificacion.verificacion,
+    usuariosControlador.eliminarUsuario,
+  );
 
 export default ruta;
