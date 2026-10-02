@@ -5,7 +5,7 @@ const VinetaEn = () => <> 🇺🇸 </>;
 const VinetaEs = () => <> 🇪🇸 </>;
 
 function Busqueda(props) {
-  const { nombreTitulo, nombreBoton, idioma } = props;
+  const { idioma } = props;
 
   console.log(props);
   const Title = styled.h1`
@@ -17,12 +17,12 @@ function Busqueda(props) {
   return (
     <>
       <Title>
-        {idioma == "en" ? <VinetaEn /> : <VinetaEs />}
+        {idioma.idioma == "en" ? <VinetaEn /> : <VinetaEs />}
 
-        {nombreTitulo}
+        {idioma.nombreTitulo}
       </Title>
       <input type="text" />
-      <Button variant="primary">{nombreBoton}</Button>
+      <Button variant="primary">{idioma.nombreBoton}</Button>
     </>
   );
 }

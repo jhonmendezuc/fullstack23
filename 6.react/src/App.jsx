@@ -1,25 +1,39 @@
 import Busqueda from "../src/Busqueda.jsx";
+import { useState } from "react";
+import { useEffect } from "react";
 
 function App() {
-  let idioma = "en";
+  const [idioma, setIdioma] = useState({
+    idioma: "en",
+    nombreTitulo: "Search the site",
+    nombreBoton: "Go somewhere",
+  });
 
-  function cambiarIdioma() {
-    idioma = "es";
+  useEffect(() => {
+    console.log("Idioma cambiado:", idioma);
+  }, [idioma]);
+
+  function cambiarIngles() {
+    setIdioma({
+      idioma: "en",
+      nombreTitulo: "Search the site",
+      nombreBoton: "Go somewhere",
+    });
+  }
+  function cambiarEspañol() {
+    setIdioma({
+      idioma: "es",
+      nombreTitulo: "Buscar en el sitio",
+      nombreBoton: "Ir a algún lugar",
+    });
+    console.log(idioma);
   }
 
   return (
     <div>
-      <button onClick={() => cambiarIdioma}>Cambiar idioma</button>
-      <Busqueda
-        nombreTitulo="Search the site"
-        nombreBoton="Go somewhere"
-        idioma={idioma}
-      />
-      <Busqueda
-        nombreTitulo="Busqueda en el sitio"
-        nombreBoton="Buscar algo"
-        idioma={idioma}
-      />
+      <button onClick={cambiarIngles}>Cambiar idioma a Ingles</button>
+      <button onClick={cambiarEspañol}>Cambiar idioma a Español</button>
+      <Busqueda idioma={idioma} />
     </div>
   );
 }
