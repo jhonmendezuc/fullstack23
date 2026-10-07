@@ -1,10 +1,22 @@
-const login = (email,password) => {
-    
+import axios from "axios"
+import config from "../config.js"
 
-  console.log(email, password)
-  //enviar datos al backend
+
+const login = async(email,password) => {
+
+try{
+  const body = {        
+        "correo": email,
+        "contra": password
+       }
+  const data = await axios.post(`${config.apiUrl}/usuarios/inicio`,body)
+  return data.data
+}catch(error){
+   return error.response.data
+}
 }
 
 export default {
   login
 }
+

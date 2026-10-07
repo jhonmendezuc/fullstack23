@@ -7,19 +7,21 @@ import {
   CardContent,
   TextField,
   Typography,
-  IconButton,
-  InputAdornment,
-  Container
+  Container,
+  Alert
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-function Login() {
+function Login({ onLoginSuccess }) {
  const [formData, setFormData] = useState({
     correo: '',
     contra: ''
   });
 
  
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({
+    message:"",
+    severity:""
+  });
 
   // Manejar el cambio en los inputs
   const handleChange = (e) => {
@@ -34,12 +36,25 @@ function Login() {
 
  
   // Manejar el envío del formulario
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-
-    userService.login(formData.correo, formData.contra);
     
-
+    let data = await userService.login(formData.correo, formData.contra);
+    switch(data.respuesta){
+        case "usuario no existe":
+          setErrors({message:"usuario no existe", severity:"error"})            
+          break;
+        case "Contraseña incorrecta":
+            setErrors({message:"contraseña incorrecta", severity:"error"})  
+            break;
+        case "Inicio exitoso":
+            setErrors({message:"Inicio exitoso", severity:"success"})  
+            localStorage.setItem("token",data.datos)  
+            if (onLoginSuccess) {
+              onLoginSuccess(data.datos);
+            }
+            break;
+    }
   };
 
   return (
@@ -120,6 +135,11 @@ function Login() {
               >
                 Ingresar
               </Button>
+              {
+                errors.message.length> 0 && (
+                <Alert severity={errors.severity}>{errors.message}</Alert>
+                )
+              }
             </Box>
           </CardContent>
         </Card>
