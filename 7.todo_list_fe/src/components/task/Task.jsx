@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import TaskService from '../../services/TaskService.js';
-import TaskTable from '../task/TaskTable.jsx';
-import TaskDialog from '../task/TaskDialog.jsx';
-import ConfirmDialog from '../task/ConfirmDialog.jsx';
+import TaskTable from './TaskTable.jsx';
+import TaskDialog from './TaskDialog.jsx';
+import ConfirmDialog from './ConfirmDialog.jsx';
 
 import {
   Box,
@@ -17,7 +17,7 @@ import {
   Chip,
   IconButton,
   Tooltip,
-  Snackbar,
+  Snackbar, 
   Alert,
   LinearProgress,
   Avatar,
